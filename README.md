@@ -7,7 +7,7 @@ Project is created with:
 * Pyspark, Spark 2.x
 * AWS service
 ## Setup
-* Please input your AWS Key, AWS secret and S3 URI for storing result parquet files in dl.cfg
+* Please input your AWS Key, AWS secret in dl.cfg and output_data in elt.py for storing result parquet files in dl.cfg
 * Create EMR cluster
 * Using SCP to transfer etl.py and dl.cfg in this project into the EC2 master node.
 * Install all required library in etl.py
