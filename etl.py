@@ -64,7 +64,7 @@ def process_song_data(spark, input_data, output_data):
     songs_table = spark.createDataFrame(data=song_data, schema=song_schema)
 
     # write songs table to parquet files partitioned by year and artist
-    songs_table = songs_table.write.partitionBy("year", "artist_id").mode("overwrite").parquet(os.path.join(output_data, "songs-table"))
+    songs_table = songs_table.write.partitionBy("year", "artist_id").mode("overwrite").parquet(output_data + "songs-table")
 
     # define artist schema
     artist_schema = StructType([
@@ -82,7 +82,7 @@ def process_song_data(spark, input_data, output_data):
     artists_table = spark.createDataFrame(data=artist_data, schema=artist_schema)
 
     # write artists table to parquet files
-    artists_table = artists_table.write.mode("overwrite").parquet(os.path.join(output_data, "artists-table"))
+    artists_table = artists_table.write.mode("overwrite").parquet(output_data + "artists-table")
 
 
 def process_log_data(spark, input_data, output_data):
@@ -106,7 +106,7 @@ def process_log_data(spark, input_data, output_data):
     users_table = spark.createDataFrame(data=users_data, schema=user_schema)
 
     # write users table to parquet files
-    users_table = users_table.write.mode("overwrite").parquet(os.path.join(output_data, "users-table"))
+    users_table = users_table.write.mode("overwrite").parquet(output_data + "users-table")
 
     # create timestamp column from original timestamp column
     df = df.withColumn("start_time", get_date_unit_function('start_time')(df.ts)). \
@@ -136,7 +136,7 @@ def process_log_data(spark, input_data, output_data):
     time_table = spark.createDataFrame(data=time_data, schema=time_schema)
 
     # write time table to parquet files partitioned by year and month
-    time_table = time_table.write.partitionBy("year", "month").mode("overwrite").parquet(os.path.join(output_data, "time-table"))
+    time_table = time_table.write.partitionBy("year", "month").mode("overwrite").parquet(output_data +"time-table")
 
     # read in song data to use for songplays table
     song_df = spark.read.load(output_data + "songs-table")
@@ -171,7 +171,7 @@ def process_log_data(spark, input_data, output_data):
     songplays_table = spark.createDataFrame(data=songplays_data, schema=songplay_schema)
 
     # write songplays table to parquet files partitioned by year and month
-    songplays_table = songplays_table.write.partitionBy("year", "month").mode("overwrite").parquet(os.path.join(output_data, "songplays-table"))
+    songplays_table = songplays_table.write.partitionBy("year", "month").mode("overwrite").parquet(output_data + "songplays-table")
 
 
 def main():
