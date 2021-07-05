@@ -28,6 +28,8 @@ def create_spark_session():
 def get_date_unit_function(unit):
     """
       Return udf to get correct date base on unit
+      Keywork argument:
+      unit -- key to return udf to get correct date
     """
     switcher = {
         'start_time': udf(lambda x: datetime.fromtimestamp(x / 1000).strftime("%H:%M:%S")),
@@ -42,6 +44,13 @@ def get_date_unit_function(unit):
 
 
 def process_song_data(spark, input_data, output_data):
+    """
+          Extract song data and transform them into parquet files
+          Keywork argument:
+          spark -- key to return udf to get correct date
+          input_data -- s3 uri to get the data
+          output_data -- s3 uri to store result files
+        """
     # get filepath to song data file
     song_log_data = os.path.join(input_data, "song_data/*/*/*/*.json")
 
@@ -85,6 +94,13 @@ def process_song_data(spark, input_data, output_data):
 
 
 def process_log_data(spark, input_data, output_data):
+    """
+              Extract log data from user activity log and transform them into parquet files
+              Keywork argument:
+              spark -- key to return udf to get correct date
+              input_data -- s3 uri to get the data
+              output_data -- s3 uri to store result files
+            """
     # get filepath to log data file
     log_data = os.path.join(input_data, "log_data/*/*/*.json")
 
